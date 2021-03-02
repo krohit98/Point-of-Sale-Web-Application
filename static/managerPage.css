@@ -1,0 +1,71 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing:border-box;
+}
+body,html{
+    height:100%;
+}
+#navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    height:100%;
+    width:150px;
+    background:rgb(255, 205, 40);
+    display:flex;
+    flex-direction:column;
+   
+    z-index:1;
+}
+#mainHeading{    
+    padding:10%;
+    text-align:center;
+    margin-top:10%;
+}
+#mainHeadingLink{
+    text-decoration:none;
+    color:white;
+}
+.navForm{
+    text-align:center;
+    padding:10%;
+}
+.navButton{
+    font-size:15px;
+    padding:10%;
+    width:110px;
+    border:1px solid white;
+    background:rgba(0,0,0,0);
+    color:white;
+}
+#navlinks{
+    display:flex;
+    flex-direction:column;
+}
+#navlinks a{
+    font-size:20px;
+    text-decoration:none;
+    color:white;
+    text-align:center;
+    padding:30% 0;
+}
+#navlinks a:hover{
+    background:rgba(0,0,0,0.1);
+}
+#mainPage{
+    height:100vh;
+    width:100%;
+    padding-left:150px;
+}
+#PageHead{
+    padding:2%;
+    background:rgb(221, 221, 221);
+    color:rgb(56, 56, 56);
+}
+#PageHead h1{
+    font-size:50px;
+}
+#PageHead p{
+    font-size: 20px;
+}

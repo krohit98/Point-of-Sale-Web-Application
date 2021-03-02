@@ -1,0 +1,17 @@
+#adminProfile{
+    background:rgb(0, 84, 153);
+}
+#PageContent{
+    display:flex;
+    flex-direction:column;
+    padding:2%;
+    font-size:20px;
+}
+#Instructions{
+    position:absolute;
+    bottom:50px;
+    border-bottom:2px solid red;
+    padding:1%;
+    margin-left:1%;
+    font-size:18px;
+}

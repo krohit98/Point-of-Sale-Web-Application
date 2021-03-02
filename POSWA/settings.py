@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'registrations.apps.RegistrationsConfig',
+    'RMS.apps.RmsConfig',
+    'POS.apps.PosConfig',
 ]
 
 MIDDLEWARE = [
