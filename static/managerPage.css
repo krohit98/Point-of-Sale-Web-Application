@@ -6,13 +6,21 @@
 body,html{
     height:100%;
 }
+body{
+    background-image:url("images/managerProfile.jpg");
+    background-size:cover;
+    background-attachment: fixed;
+}
+::placeholder{
+    color:rgb(194, 193, 193);
+}
 #navbar{
     position:fixed;
     top:0;
     left:0;
     height:100%;
     width:150px;
-    background:rgb(255, 205, 40);
+    background:rgb(235, 180, 0);
     display:flex;
     flex-direction:column;
    
@@ -39,6 +47,10 @@ body,html{
     background:rgba(0,0,0,0);
     color:white;
 }
+.navButton:hover{
+    color:rgb(235, 180, 0);
+    background:white;
+}
 #navlinks{
     display:flex;
     flex-direction:column;
@@ -48,7 +60,7 @@ body,html{
     text-decoration:none;
     color:white;
     text-align:center;
-    padding:30% 0;
+    padding:2.5vh 0;
 }
 #navlinks a:hover{
     background:rgba(0,0,0,0.1);
@@ -60,12 +72,19 @@ body,html{
 }
 #PageHead{
     padding:2%;
-    background:rgb(221, 221, 221);
-    color:rgb(56, 56, 56);
+    background:rgba(0,0,0,0.8);
+    color:white;
 }
 #PageHead h1{
     font-size:50px;
 }
 #PageHead p{
     font-size: 20px;
+}
+#PageContent p{
+    color:white;
+    font-size:30px;
+}
+#PageContent{
+    padding-bottom:40px;
 }

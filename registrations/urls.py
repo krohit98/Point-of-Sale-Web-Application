@@ -14,4 +14,5 @@ urlpatterns=[
 
     path('registerAdmin', views.registerAdmin, name='registerAdmin'),
     path('loginAdmin', views.loginAdmin, name='loginAdmin'),
+
 ]

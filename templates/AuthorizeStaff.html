@@ -11,6 +11,7 @@
     <title>Confirm Authorization</title>
 </head>
 <body>
+    <div id="layer">
     <header>
         <nav id="navbar">
             <h1 id="mainHeading"><a id="mainHeadingLink" href="\"><i>POSWA</i></a></h1>
@@ -25,10 +26,11 @@
             <form id="authForm" action="authStaff" method="POST">
                 {%csrf_token%}
                 <input class="authField" type="text" name="Restaurant_ID" placeholder="Enter Restaurant ID"><br>
-                <input class="authField" type="text name="Manager_AcessID" placeholder="Enter Access ID"><br>
+                <input class="authField" type="text" name="Manager_AccessID" placeholder="Enter Access ID"><br>
                 <input id="authButton" type="submit" value="Authorize">
             </form>
         </div>
     </main>
+</div>
 </body>
 </html>

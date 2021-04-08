@@ -37,21 +37,23 @@ def authManager(request):
 def authStaff(request):
     if(request.method == 'POST'):
         Restaurant_ID = request.POST['Restaurant_ID']
-        Manager_AccessID = request.POST['Admin_AccessID']
-        restaurantID_set = RestaurantRegistrationTable.objects.all().values('user_id')
+        Manager_AccessID = request.POST['Manager_AccessID']
+        request.session['Restaurant_ID'] = Restaurant_ID
+        request.session['Manager_AccessID'] = Manager_AccessID
+        restaurantID_set = ManagerRegistrationTable.objects.all().values('Restaurant_id')
         managerID_set = ManagerRegistrationTable.objects.all().values('Manager_AccessID')
         restaurantID_list = []
         managerID_list = []
         staffAuth_dict = {}
         for i in restaurantID_set:
-            restaurantID_list += [(i['user_id'])]
+            restaurantID_list += [(i['Restaurant_id'])]
         for i in managerID_set:
-            managerID_list += [(i['Admin_AccessID'])]
-        n = len(restaurantID_list)
+            managerID_list += [(i['Manager_AccessID'])]
+        n = len(managerID_list)
         for i in range(n):
-            staffAuth_dict[restaurantID_list[i]] = managerID_list[i]
+            staffAuth_dict[managerID_list[i]] = restaurantID_list[i]
         
-        if staffAuth_dict[int(Restaurant_ID)] == Manager_AccessID:
+        if staffAuth_dict[Manager_AccessID] == int(Restaurant_ID):
             return render(request, 'RegisterStaff.html')
         else:
             messages.info(request,'You are not authorized to register as Staff')
@@ -63,8 +65,8 @@ def registerManager(request):
     if request.method == "POST":
         managerName = request.POST['managerName']
         nameArr=managerName.split(" ")
-        managerFirstName=nameArr[0]
-        managerLastName=nameArr[1]
+        managerFirstName=nameArr[0].capitalize()
+        managerLastName=nameArr[1].capitalize()
         managerEmail=request.POST['managerEmail']
         managerAddress=request.POST['managerAddress']
         managerContact=request.POST['managerContact']
@@ -111,17 +113,62 @@ def loginManager(request):
         return render(request, 'ManagerLogin.html')
 
 def registerStaff(request):
-    return
+    if request.method == 'POST':
+        staffName=request.POST['staffName']
+        nameArr=staffName.split(" ")
+        staffFirstName=nameArr[0].capitalize()
+        staffLastName=nameArr[1].capitalize()
+        staffEmail=request.POST['staffEmail']
+        staffAddress=request.POST['staffAddress']
+        staffContact=request.POST['staffContact']
+        staffDesignation=request.POST['designation']
+        password1=request.POST['password1']
+        password2=request.POST['password2']
+        restaurantID=request.session['Restaurant_ID']
+        managerAccessID=request.session['Manager_AccessID']
+
+        if password1==password2:
+            if User.objects.filter(email=staffEmail).exists():
+                messages.info(request,'email already in use')
+                return redirect('registerStaff')
+            else:
+                user=User.objects.create_user(username=staffEmail, password=password1, email=staffEmail, first_name=staffFirstName, last_name=staffLastName, address=staffAddress, contact=staffContact, is_restStaff = True)
+                staff=StaffRegistrationTable()
+                staff.user_id=user.id
+                staff.Restaurant_id=restaurantID
+                staff.Manager_AccessID=managerAccessID
+                staff.Staff_designation=staffDesignation
+                staff.Staff_Salary=0
+                user.save()
+                staff.save()
+                return redirect('/')
+        else:
+            messages.info(request,'password mismatch')
+            return redirect('registerStaff')
+
+    else:
+        return render(request, 'RegisterStaff.html')
 
 def loginStaff(request):
-    return render(request, 'StaffLogin.html')
+    if request.method == 'POST':
+        staffEmail = request.POST['staffEmail']
+        staffPassword = request.POST['staffPassword'] 
+        user = auth.authenticate(username = staffEmail, password = staffPassword)
+        if user is not None:
+            auth.login(request,user)
+            return redirect('POS/staffProfile')
+        else:
+            messages.info(request,'Enter valid credentials')
+            return redirect('loginStaff')
+    else: 
+        return render(request, 'StaffLogin.html')
 
 def registerAdmin(request):
     if request.method=='POST':
         adminName=request.POST['adminName']
         nameArr=adminName.split(" ")
-        adminFirstName=nameArr[0]
-        adminLastName=nameArr[1]
+        adminFirstName=nameArr[0].capitalize()
+        adminLastName=nameArr[1].capitalize()
         adminEmail=request.POST['adminEmail']
         adminAddress=request.POST['adminAddress']
         adminContact=request.POST['adminContact']

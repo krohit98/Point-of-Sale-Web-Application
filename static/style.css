@@ -8,11 +8,16 @@ html,body{
     height:100%;
 }
 body{
-    background-image:url("images/background.jpg");
+    background-image:url("images/index.jpg");
     background-size: cover;
     background-repeat:none;
     background-position: bottom;
 
+}
+#layer{
+    background:rgba(0, 0, 0, 0.4);
+    height:100%;
+    width:100%;
 }
 #navbar{
     display:flex;
@@ -22,7 +27,6 @@ body{
     padding-right:5%;
     padding-left:5%;
 }
-
 #mainHeading{
     flex:1;
     font-family: 'Rajdhani', sans-serif;

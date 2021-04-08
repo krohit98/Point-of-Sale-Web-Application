@@ -1,0 +1,21 @@
+#manageCustomers{
+    background:rgb(190, 42, 42);
+}
+#customerRecords{
+    width:60%;
+    background:rgba(255,255,255,0.5);
+    margin:auto;
+    margin-top:20px;
+}
+#customerRecords tr{
+    background:rgba(0,0,0,0.8);
+    font-size:20px;
+    color:white;
+    text-align:center;
+}
+#customerRecords tr th{
+    padding:5px;
+}
+#customerRecords tr td{
+    padding:5px;
+}

@@ -26,6 +26,7 @@ class MenuItemsTable(models.Model):
     Item_GST = models.IntegerField()
     Item_ProfitMargin = models.IntegerField()
     Selling_Price = models.FloatField()
+    Recipe = models.BooleanField(default=False)
 
 class RecipeRequirementsTable(models.Model):
     Restaurant = models.ForeignKey(RestaurantRegistrationTable, on_delete=models.CASCADE)

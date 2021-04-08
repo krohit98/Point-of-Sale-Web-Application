@@ -22,9 +22,10 @@
     </header>
     <div id="loginDiv">
         <h1 id="loginHead">Login for Staff Access</h1>
-        <form id="loginForm" action="" method="POST">
-            <input class="loginField" type="text" placeholder="Enter Email"><br>
-            <input class="loginField" type="text" placeholder="Enter Password"><br>
+        <form id="loginForm" action="loginStaff" method="POST">
+            {%csrf_token%}
+            <input class="loginField" type="text" name="staffEmail" placeholder="Enter Email"><br>
+            <input class="loginField" type="text" name="staffPassword" placeholder="Enter Password"><br>
             <input id="loginButton" type="submit" value="Login">
         </form>
     </div>

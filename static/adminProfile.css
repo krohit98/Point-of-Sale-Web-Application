@@ -10,6 +10,7 @@
 #Instructions{
     position:absolute;
     bottom:50px;
+    background:rgba(255,255,255,0.7);
     border-bottom:2px solid red;
     padding:1%;
     margin-left:1%;
