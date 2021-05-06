@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import auth
+from django.contrib import messages
 from registrations.models import *
 from RMS.models import*
 from POS.models import*
@@ -192,8 +193,96 @@ def manageCovers(request):
         toPass={'Restaurantdetails':restDetails, 'seatDetails':seatDetails}
         return render(request,"coverManagement.html", toPass)
 
+def manageEmployees(request):
+    admin = RestaurantRegistrationTable.objects.filter(user_id=request.user.id)
+    Restaurant_ID = admin[0].user_id
+    managerDetails = ManagerRegistrationTable.objects.filter(Restaurant_id = Restaurant_ID)
+    staffDetails = StaffRegistrationTable.objects.filter(Restaurant_id = Restaurant_ID)
+    managers = []
+    staves = []
+
+    if request.method == 'POST':
+        employeeEmail = request.POST['employeeEmail']
+        employeeSalary = request.POST['employeeSalary']
+        employee = User.objects.filter(email = employeeEmail)
+        if len(employee)<=0:
+            messages.error(request,'Employee for given email does not exist!')
+            return redirect('manageEmployees')
+        else:
+            employeeId = employee[0].id
+            manager = managerDetails.filter(user_id = employeeId)
+            staff = staffDetails.filter(user_id = employeeId)
+            if len(manager) > 0:
+                manager.update(Manager_Salary = employeeSalary)
+            else :
+                staff.update(Staff_Salary = employeeSalary)
+
+    for manager in managerDetails:
+        managerSalary = manager.Manager_Salary
+        managerId = manager.user_id
+        employeeDetails = User.objects.filter(id = managerId)[0]
+        details={
+            'name':(employeeDetails.first_name+" "+employeeDetails.last_name).title(),
+            'email':employeeDetails.email,
+            'contact':employeeDetails.contact,
+            'address':employeeDetails.address,
+            'salary':managerSalary,
+            'joiningDate':str(employeeDetails.date_joined)[:10]
+        }
+        managers.append(details)
+
+    for staff in staffDetails:
+        staffSalary = staff.Staff_Salary
+        staffDesignation = staff.Staff_designation
+        staffId = staff.user_id
+        employeeDetails = User.objects.filter(id = staffId)[0]
+        details={
+            'name':(employeeDetails.first_name+" "+employeeDetails.last_name).title(),
+            'email':employeeDetails.email,
+            'contact':employeeDetails.contact,
+            'address':employeeDetails.address,
+            'salary':staffSalary,
+            'designation':staffDesignation,
+            'joiningDate':str(employeeDetails.date_joined)[:10]
+        }
+        staves.append(details)
+
+    restDetails = RestaurantRegistrationTable.objects.filter(user_id=Restaurant_ID)
+    toPass={'Restaurantdetails':restDetails, 'managers':managers, 'staves':staves}
+    return render(request, "manageEmployees.html", toPass)
+
 def salesRecords(request):
-    pass
+    manager = ManagerRegistrationTable.objects.filter(user_id=request.user.id)
+    admin = RestaurantRegistrationTable.objects.filter(user_id=request.user.id)
+    if len(manager) != 0 :
+        Restaurant_ID = manager[0].Restaurant_id
+    else:
+        Restaurant_ID = admin[0].user_id
+    completedOrders =  OrderManagementTable.objects.filter(Restaurant_id = Restaurant_ID).filter(Order_Completed = True)
+    allCompletedOrders=[]
+    for order in completedOrders:
+        customerId = order.Customer_id
+        customer = CustomerManagementTable.objects.filter(Restaurant_id = Restaurant_ID).filter(id = customerId)[0]
+        currentOrder={
+            'customerName':customer.Customer_Name,
+            'customerContact':customer.Customer_Phone,
+            'items':order.Items_Ordered[:-2],
+            'type':order.Order_Type,
+            'tableNumber':order.Table_Number,
+            'discount':order.Discount_Percentage,
+            'price':order.Amount_To_Pay,
+            'date':order.Order_Date,
+            'time':order.Order_Time,
+            'invoice':order.Invoice
+        }
+        allCompletedOrders.append(currentOrder)
+    restDetails = RestaurantRegistrationTable.objects.filter(user_id=Restaurant_ID)
+    toPass={'Restaurantdetails':restDetails, 'Completedorders':allCompletedOrders}
+    if len(manager) != 0 :
+        return render(request, "salesRecords.html", toPass)
+    else:
+        return render(request, "orderRecords.html", toPass)
+    
 
 def salesAnalysis(request):
     pass

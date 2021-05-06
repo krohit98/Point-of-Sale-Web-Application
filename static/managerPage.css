@@ -88,3 +88,7 @@ body{
 #PageContent{
     padding-bottom:40px;
 }
+.errorMessage{
+    color:red;
+    font-size:18px;
+}

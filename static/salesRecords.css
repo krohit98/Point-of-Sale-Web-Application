@@ -1,5 +1,5 @@
-#manageOrders{
-    background:rgb(190, 42, 42);
+#salesRecords{
+    background:rgb(182, 143, 17);
 }
 #orderRecords{
     background:rgba(255,255,255,0.8);
@@ -15,7 +15,7 @@
 #orderRecords tr th{
     padding:5px;
     font-size:18px;
-    border-bottom:4px solid rgb(223, 72, 72);
+    border-bottom:4px solid rgb(182, 143, 17);
 }
 #orderRecords tr td{
     padding:5px;

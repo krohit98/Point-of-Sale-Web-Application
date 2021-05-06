@@ -77,6 +77,13 @@ body{
 #PageHead p{
     font-size: 20px;
 }
+#PageContent{
+    padding-bottom:40px;
+}
 #PageContent p{
     font-size:30px;
+}
+.errorMessage{
+    color:red;
+    font-size:18px;
 }

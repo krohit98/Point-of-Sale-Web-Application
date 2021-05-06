@@ -10,6 +10,7 @@ urlpatterns=[
     path('customizeMenu',views.customizeMenu,name='customizeMenu'),
     path('manageRecipe',views.manageRecipe,name='manageRecipe'),
     path('manageCovers',views.manageCovers,name='manageCovers'),
+    path('manageEmployees',views.manageEmployees,name='manageEmployees'),
     
     path('salesRecords',views.salesRecords,name='salesRecords'),
     path('salesAnalysis',views.salesAnalysis,name='salesAnalysis'),

@@ -9,6 +9,7 @@ body,html{
 body{
     background-image: url("images/staffProfile.jpg");
     background-size:cover;
+    background-attachment:fixed;
 }
 #navbar{
     position:fixed;
@@ -42,6 +43,10 @@ body{
     border:1px solid white;
     background:rgba(0,0,0,0);
     color:white;
+}
+.navButton:hover{
+    background:white;
+    color:rgb(223, 72, 72);
 }
 #navlinks{
     display:flex;
@@ -259,4 +264,8 @@ body{
 #cancelOrderButton:hover{
     background:rgb(255, 56, 56);
     color:white;
+}
+.errorMessage{
+    color:red;
+    font-size:18px;
 }

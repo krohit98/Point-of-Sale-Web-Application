@@ -41,3 +41,4 @@ class OrderManagementTable(models.Model):
     Order_Date = models.DateField(auto_now_add=True)
     Order_Time = models.TimeField(auto_now_add=True)
     Invoice = models.ImageField(blank = True, null = True)
+    Order_Completed = models.BooleanField(default = False)

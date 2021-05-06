@@ -72,8 +72,31 @@ def deleteOrder(request):
 def manageOrders(request):
     staff = StaffRegistrationTable.objects.filter(user_id = request.user.id)
     Restaurant_ID = staff[0].Restaurant_id
+    if request.method == 'POST':
+        orderId = request.POST.get("orderId")
+        order = OrderManagementTable.objects.filter(Restaurant_id = Restaurant_ID).filter(id = orderId)
+        order.update(Order_Completed = True)
+
+    completedOrders =  OrderManagementTable.objects.filter(Restaurant_id = Restaurant_ID).filter(Order_Completed = True)
+    allCompletedOrders=[]
+    for order in completedOrders:
+        customerId = order.Customer_id
+        customer = CustomerManagementTable.objects.filter(Restaurant_id = Restaurant_ID).filter(id = customerId)[0]
+        currentOrder={
+            'customerName':customer.Customer_Name,
+            'customerContact':customer.Customer_Phone,
+            'items':order.Items_Ordered[:-2],
+            'type':order.Order_Type,
+            'tableNumber':order.Table_Number,
+            'discount':order.Discount_Percentage,
+            'price':order.Amount_To_Pay,
+            'date':order.Order_Date,
+            'time':order.Order_Time,
+            'invoice':order.Invoice
+        }
+        allCompletedOrders.append(currentOrder)
     restDetails = RestaurantRegistrationTable.objects.filter(user_id=Restaurant_ID)
-    toPass = {'Restaurantdetails':restDetails}
+    toPass = {'Restaurantdetails':restDetails, 'Completedorders':allCompletedOrders}
     return render(request,"manageOrders.html", toPass)
 
 def manageKOTS(request):
@@ -85,8 +108,12 @@ def manageKOTS(request):
         recievedData = json.loads(request.body)
         customerId = recievedData.get('customerId')
         orderType = recievedData.get('orderType')
-        seatsRequired = recievedData.get('seatsRequired')
-        tableNumber = recievedData.get('tableNumber')
+        if orderType == 'Takeaway' or orderType == 'Delivery':
+            seatsRequired = None
+            tableNumber = None
+        else: 
+            seatsRequired = recievedData.get('seatsRequired')
+            tableNumber = recievedData.get('tableNumber')
         orderDiscount = recievedData.get('orderDiscount')
         amountToPay = recievedData.get('totalPrice')
         amountRecieved = recievedData.get('amountRecieved')
@@ -94,11 +121,20 @@ def manageKOTS(request):
         customer = CustomerManagementTable.objects.filter(Restaurant_id = Restaurant_ID).filter(id = customerId)
         orderCount = customer[0].Customer_Order_Count
         order = OrderItemsTable.objects.filter(Restaurant_id = Restaurant_ID).filter(Customer_id = customerId)
+        restaurantInventory = InventoryTable.objects.filter(Restaurant_id = Restaurant_ID)
+        recipe = RecipeRequirementsTable.objects.filter(Restaurant_id = Restaurant_ID)
         totalPrice = 0
         orderItems = ""
         for item in order:
             totalPrice += item.Total_Item_Price 
-            orderItems += "("+str(item.Item_Name)+" X "+str(int(item.Item_Quantity))+")"
+            orderItems += str(item.Item_Name)+"(x"+str(int(item.Item_Quantity))+"), "
+            itemRecipe = recipe.filter(Item_id = item.Item_id)
+            for ingredients in itemRecipe:
+                inventory = restaurantInventory.filter(id = ingredients.Ingredient_id)
+                qtyAvailable = inventory[0].Inventory_Quantity
+                qtyConsumed = item.Item_Quantity * ingredients.Ingredient_Quantity
+                qtyRemaining = qtyAvailable - qtyConsumed
+                inventory.update(Inventory_Quantity = qtyRemaining)
         placedOrder = OrderManagementTable()
         placedOrder.Customer_Order_Count = orderCount
         placedOrder.Items_Ordered = orderItems
@@ -112,13 +148,31 @@ def manageKOTS(request):
         placedOrder.Balance_Returned = returnBalance
         placedOrder.Order_Date = today.strftime("%d/%m/%Y")
         placedOrder.Order_Time = now.strftime("%H:%M:%S")
-        placedOrder.Invoice = ""
+        placedOrder.Invoice = None
         placedOrder.Customer_id = customerId
         placedOrder.Restaurant_id = Restaurant_ID
         placedOrder.save()
 
+    activeOrders = OrderManagementTable.objects.filter(Restaurant_id = Restaurant_ID).filter(Order_Completed = False)
+    allActiveOrders=[]
+    for order in activeOrders:
+        items = order.Items_Ordered.split(", ")
+        items.pop()
+        orderItems={}
+        for item in items:
+            orderItems[item[:item.index('(')]]=item[item.index('x')+1:item.index(')')]
+        currentOrder = {
+            'orderId':order.id,
+            'tableNumber':order.Table_Number,
+            'orderDate':order.Order_Date,
+            'orderTime':order.Order_Time,
+            'orderType':order.Order_Type,
+            'orderItems':orderItems
+        }
+        allActiveOrders.append(currentOrder)
+    
     restDetails = RestaurantRegistrationTable.objects.filter(user_id=Restaurant_ID)
-    toPass = {'Restaurantdetails':restDetails}
+    toPass = {'Restaurantdetails':restDetails, 'Activeorders':allActiveOrders}
     return render(request,"manageKOTS.html", toPass)
 
 def manageCustomers(request):

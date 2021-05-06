@@ -204,6 +204,9 @@ function addKOT(){
     let xhr = new XMLHttpRequest()
     xhr.open("POST","manageKOTS",true)
     xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    xhr.onload=function(){
+        window.location.replace('manageKOTS')
+    }
     xhr.send(JSON.stringify({
         'customerId': CustomerId,
         'orderType':orderType.value,

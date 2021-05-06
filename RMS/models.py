@@ -1,14 +1,7 @@
 from django.db import models
 from registrations.models import RestaurantRegistrationTable
 # Create your models here.
-itemCategory = (
-    ('fooditem', 'Food Item'),
-    ('beverage', 'Beverage'),
-)
-itemType = (
-    ('veg','Veg'),
-    ('nonveg','Non-Veg'),
-)
+
 
 class InventoryTable(models.Model):
     Restaurant = models.ForeignKey(RestaurantRegistrationTable, on_delete=models.CASCADE)
@@ -20,8 +13,8 @@ class InventoryTable(models.Model):
 class MenuItemsTable(models.Model):
     Restaurant = models.ForeignKey(RestaurantRegistrationTable, on_delete=models.CASCADE)
     Item_Name = models.CharField(max_length = 100)
-    Item_Category = models.CharField(max_length = 20, choices=itemCategory)
-    Item_Type = models.CharField(max_length = 10, choices = itemType)
+    Item_Category = models.CharField(max_length = 20)
+    Item_Type = models.CharField(max_length = 10)
     Cost_Price = models.FloatField()
     Item_GST = models.IntegerField()
     Item_ProfitMargin = models.IntegerField()
