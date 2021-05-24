@@ -5,6 +5,7 @@ from registrations.models import *
 from RMS.models import*
 from POS.models import*
 from django.http import JsonResponse
+from .utils import getPlot
 import json
 
 
@@ -282,10 +283,41 @@ def salesRecords(request):
         return render(request, "salesRecords.html", toPass)
     else:
         return render(request, "orderRecords.html", toPass)
-    
 
 def salesAnalysis(request):
-    pass
+    manager = ManagerRegistrationTable.objects.filter(user_id=request.user.id)
+    admin = RestaurantRegistrationTable.objects.filter(user_id=request.user.id)
+    if len(manager) != 0 :
+        Restaurant_ID = manager[0].Restaurant_id
+    else:
+        Restaurant_ID = admin[0].user_id
+    chart = 0
+    if request.method=='POST':
+        plotDate=request.POST['plotDate']
+        orders=OrderManagementTable.objects.filter(Order_Date=plotDate)
+        x=['midnight','1am','2am','3am','4am','5am','6am','7am','8am','9am','10am','11am',
+            'noon','1pm','2pm','3pm','4pm','5pm','6pm','7pm','8pm','9pm','10pm','11pm']
+        y=[0]*24
+        orderTime=[]
+        for order in orders:
+            orderTime.append(str(order.Order_Time)[:2])
+        orderTime.sort()
+        orderTime = [int(i) for i in orderTime]
+        count=0
+        for team in orderTime:
+            count=orderTime.count(team)
+            y[team] = count
+        
+        chart = getPlot(x,y,plotDate)
+        if len(orders) == 0:
+            chart=1
+
+    restDetails = RestaurantRegistrationTable.objects.filter(user_id=Restaurant_ID)
+    toPass={'Restaurantdetails':restDetails, 'chart':chart}
+    if len(manager) != 0 :
+        return render(request, "salesAnalysis.html", toPass)
+    else:
+        return render(request, "orderAnalysis.html", toPass)
 
 def logout(request):
     auth.logout(request)

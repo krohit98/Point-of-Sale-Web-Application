@@ -36,13 +36,13 @@
                 {%csrf_token%}
                 <div id="recipeFormInputs">
                     <input id="itemIdInput" type="hidden" name="itemId">
-                    <input list="ingredientSuggestions" id="ingredientName" class="recipeField" type="text" name="ingredientName" placeholder="Ingredient name">
+                    <input list="ingredientSuggestions" id="ingredientName" class="recipeField" type="text" name="ingredientName" placeholder="Ingredient name" required="true">
                     <datalist id="ingredientSuggestions">
                     {%for ingredient in ingredients%}
                         <option value={{ingredient.Ingredient_Name}}></option>
                     {%endfor%}
                     </datalist>
-                    <input id="ingredientQuantity" class="recipeField" type="text" name="ingredientQuantity" placeholder="Ingredient quantity (grams)">
+                    <input id="ingredientQuantity" class="recipeField" type="text" name="ingredientQuantity" placeholder="Ingredient quantity (grams)" required="true">
                 </div>
                 <input id="addIngredientButton" type="submit" value="Add Ingredient">
             </form>
@@ -69,18 +69,18 @@
             <div id="PageContent">
                 <form id="menuForm" action="customizeMenu" method="post">
                     {%csrf_token%}
-                    <input class="menuField" type="text" name="itemName" placeholder="Item name">
-                    <input list="itemCategorySuggestion" class="menuField" type="text" name="itemCategory" placeholder="Item Category">
+                    <input class="menuField" type="text" name="itemName" placeholder="Item name" required="true">
+                    <input list="itemCategorySuggestion" class="menuField" type="text" name="itemCategory" placeholder="Item Category" required="true" autocomplete="off">
                     <datalist id="itemCategorySuggestion">
                         <option value="Food item"></option>
                         <option value="Beverage"></option>
                     </datalist>
-                    <input list="itemTypeSuggestion" class="menuField" type="text" name="itemType" placeholder="Veg/Non-Veg">
+                    <input list="itemTypeSuggestion" class="menuField" type="text" name="itemType" placeholder="Veg/Non-Veg" required="true" autocomplete="off">
                     <datalist id="itemTypeSuggestion">
                         <option value="Veg"></option>
                         <option value="Non-Veg"></option>
                     </datalist>
-                    <input class="menuField" type="text" name="itemProfitMargin" placeholder="Profit margin required"><br><br>
+                    <input class="menuField" type="text" name="itemProfitMargin" placeholder="Profit margin required" required="true"><br><br>
                     <input class="menuButton" type="submit" value="Add to Menu">
                 </form>
                 <table>

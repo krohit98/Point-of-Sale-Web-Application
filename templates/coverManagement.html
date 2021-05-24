@@ -38,8 +38,8 @@
             <div id="PageContent">
                 <form id="tableForm" action="manageCovers" method="post">
                     {%csrf_token%}
-                    <input class="tableField" name="tableNumber" type="text" placeholder="Enter table number"><br>
-                    <input class="tableField" name="covers" type="text" placeholder="Enter number of seats"><br><br>
+                    <input class="tableField" name="tableNumber" type="text" placeholder="Enter table number" required="true"><br>
+                    <input class="tableField" name="covers" type="text" placeholder="Enter number of seats" required="true"><br><br>
                     <input class="tableButton"  type="submit" value="Add Table">
                 </form>
                 <div id="tableList">

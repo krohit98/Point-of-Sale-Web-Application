@@ -38,12 +38,12 @@
             <div id="PageContent">
                 <form id="addStaff" action="" method="post">
                     {%csrf_token%}
-                    <input class="registerField" type="text" name="staffName" placeholder="Enter Name">
-                    <input class="registerField" type="text" name="staffEmail" placeholder="Enter Email">
-                    <input class="registerField" type="text" name="staffAddress" placeholder="Enter Address">           
-                    <input class="registerField" type="number" name="staffContact" placeholder="Enter Contact">
-                    <input class="registerField" type="text" name="designation" placeholder="Enter staff post">
-                    <input class="registerField" type="number" name="staffSalary" placeholder="Enter Salary"><br><br>
+                    <input class="registerField" type="text" name="staffName" placeholder="Enter Name" required="true">
+                    <input class="registerField" type="text" name="staffEmail" placeholder="Enter Email" required="true">
+                    <input class="registerField" type="text" name="staffAddress" placeholder="Enter Address" required="true">           
+                    <input class="registerField" type="number" name="staffContact" placeholder="Enter Contact" required="true">
+                    <input class="registerField" type="text" name="designation" placeholder="Enter staff post" required="true">
+                    <input class="registerField" type="number" name="staffSalary" placeholder="Enter Salary" required="true"><br><br>
                     <input class="registerButton" type="submit" value="Add Staff">
                 </form>
                 <table>

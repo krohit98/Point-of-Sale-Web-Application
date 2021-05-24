@@ -25,13 +25,13 @@
             <h1>Register as Manager</h1>
             <form id="registerForm" action="registerManager" method="POST">
                 {%csrf_token%}
-                <input class="registerField" type="text" name="managerName" placeholder="Enter Name">
-                <input class="registerField" type="text" name="managerEmail" placeholder="Enter Email">
-                <input class="registerField" type="text" name="managerAddress" placeholder="Enter Address">
-                <input class="registerField" type="password" name="password1" placeholder="Enter Password">
-                <input class="registerField" type="number" name="managerContact" placeholder="Enter Contact">
-                <input class="registerField" type="password" name="password2" placeholder="Confirm Password">
-                <input class="registerField" type="text" name="managerAccessID" placeholder="Enter Access ID">
+                <input class="registerField" type="text" name="managerName" placeholder="Enter Name" required="true">
+                <input class="registerField" type="email" name="managerEmail" placeholder="Enter Email" required="true">
+                <input class="registerField" type="text" name="managerAddress" placeholder="Enter Address" required="true">
+                <input class="registerField" type="password" name="password1" placeholder="Enter Password" required="true">
+                <input class="registerField" type="number" name="managerContact" placeholder="Enter Contact" required="true">
+                <input class="registerField" type="password" name="password2" placeholder="Confirm Password" required="true">
+                <input class="registerField" type="text" name="managerAccessID" placeholder="Enter Access ID" required="true">
                 <input class="registerButton" type="submit" value="Register">
             </form>
         </div>

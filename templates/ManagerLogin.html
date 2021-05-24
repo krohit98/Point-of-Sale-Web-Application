@@ -24,10 +24,15 @@
             <h1 id="loginHead">Login for Manager Access</h1>
             <form id="loginForm" action="loginManager" method="POST">
                 {%csrf_token%}
-                <input class="loginField" type="text" name="managerEmail" placeholder="Enter Email"><br>
-                <input class="loginField" type="text" name="managerPassword" placeholder="Enter Password"><br>
+                <input class="loginField" type="email" name="managerEmail" placeholder="Enter Email" required="true"><br>
+                <input class="loginField" type="password" name="managerPassword" placeholder="Enter Password" required="true"><br>
                 <input id="loginButton" type="submit" value="Login">
             </form>
+            <div class="errorMessage">
+                {%for message in messages%}
+                    {{message}}
+                {%endfor%}
+            </div>
         </div>
     </main>
 </body>

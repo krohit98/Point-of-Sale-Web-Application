@@ -64,7 +64,6 @@
                     <div class="KOT_buttons">
                         <form class="KOT_form" method="post">
                             {%csrf_token%}
-                            <button formaction="generateBill" id="generateBillBtn" class="KOTbutton" name="orderId" value={{order.orderId}}>Generate Bill</button>
                             <button formaction="manageOrders" id="KOTcompletedbtn" class="KOTbutton" name="orderId" value={{order.orderId}}>Mark As Completed</button>
                         </form>
                     </div>

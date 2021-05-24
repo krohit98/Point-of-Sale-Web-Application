@@ -20,7 +20,7 @@
                 <a id="adminProfile" href="adminProfile">Profile</a>
                 <a id="manageEmployees" href="manageEmployees">Manage Employees</a>
                 <a id="salesRecords" href="salesRecords">Sales Records</a>
-                <a id="salesAnalysis" href="">Sales Analysis</a>
+                <a id="salesAnalysis" href="salesAnalysis">Sales Analysis</a>
             </div>
         </nav>
     </header>
@@ -44,7 +44,6 @@
                         <th>Order Price</th>
                         <th>Date</th>
                         <th>Time</th>
-                        <th>Invoice</th>
                     </tr>
                     {%for order in Completedorders%}
                     <tr class="orderRecordsData">
@@ -58,7 +57,6 @@
                         <td>{{order.price}}/-</td>
                         <td>{{order.date}}</td>
                         <td>{{order.time}}</td>
-                        <td><a href="#">Print</a></td>
                     </tr>
                     {%endfor%}
                 </table>

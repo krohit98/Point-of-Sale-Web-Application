@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import auth
 from django.contrib import messages
 from registrations.models import *
+import pickle
+import numpy as np
 
 # Create your views here.
 def index(request):
@@ -25,7 +27,9 @@ def authManager(request):
         n = len(restaurantID_list)
         for i in range(n):
             managerAuth_dict[restaurantID_list[i]] = adminID_list[i]
-
+        if int(Restaurant_ID) not in restaurantID_list:
+            messages.info(request,'You are not authorized to register as Manager')
+            return redirect('authManager')
         if managerAuth_dict[int(Restaurant_ID)] == Admin_AccessID:
             return render(request, 'RegisterManager.html')
         else:
@@ -51,9 +55,11 @@ def authStaff(request):
             managerID_list += [(i['Manager_AccessID'])]
         n = len(managerID_list)
         for i in range(n):
-            staffAuth_dict[managerID_list[i]] = restaurantID_list[i]
-        
-        if staffAuth_dict[Manager_AccessID] == int(Restaurant_ID):
+            staffAuth_dict[restaurantID_list[i]] = managerID_list[i]
+        if int(Restaurant_ID) not in restaurantID_list:
+            messages.info(request,'You are not authorized to register as Staff')
+            return redirect('authStaff')
+        if staffAuth_dict[int(Restaurant_ID)] == Manager_AccessID:
             return render(request, 'RegisterStaff.html')
         else:
             messages.info(request,'You are not authorized to register as Staff')
@@ -102,7 +108,8 @@ def loginManager(request):
     if request.method == 'POST':
         managerEmail = request.POST['managerEmail']
         managerPassword = request.POST['managerPassword'] 
-        user = auth.authenticate(username = managerEmail, password = managerPassword)
+        user = auth.authenticate(username = managerEmail, 
+                                password = managerPassword)
         if user is not None:
             auth.login(request,user)
             return redirect('RMS/managerProfile')
@@ -212,3 +219,32 @@ def loginAdmin(request):
             return redirect('loginAdmin')
     else: 
         return render(request, 'AdminLogin.html')
+
+def predictRevenue(request):
+    model = pickle.load(open('registrations/model_RFR.pkl', 'rb'))
+    output = 0
+    if request.method=="POST":
+        if request.POST['type_FC'] == 'Yes':
+            type_FC = 1
+        else:
+            type_FC = 0
+        if request.POST['type_IL'] == 'Yes':
+            type_IL = 1
+        else:
+            type_IL = 0
+        if request.POST['type_DT'] == 'Yes':
+            type_DT = 1
+        else:
+            type_DT = 0
+        if request.POST['bigCity'] == 'Yes':
+            bigCity = 1
+        else:
+            bigCity = 0
+        openTime = int(request.POST['openTime'])
+        int_features = [type_FC, type_IL, type_DT, bigCity, openTime]
+        final_features = [np.array(int_features)]
+        prediction = model.predict(final_features)
+        output = round(prediction[0], 2)
+    
+    toPass={'result':output}
+    return render(request, 'revenuePrediction.html',toPass)

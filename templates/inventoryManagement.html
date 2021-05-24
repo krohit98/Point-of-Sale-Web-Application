@@ -38,9 +38,9 @@
             <div id="PageContent">
                 <form id="inventoryForm" action="manageInventory" method="post">
                     {%csrf_token%}
-                    <input class="inventoryField" type="text" name="ingredientName" placeholder="Ingredient name">
-                    <input class="inventoryField" type="text" name="ingredientQuantity" placeholder="Ingredient qunatity (grams)">
-                    <input class="inventoryField" type="text" name="ingredientPrice" placeholder="Ingredient price"><br><br>
+                    <input class="inventoryField" type="text" name="ingredientName" placeholder="Ingredient name" required="true">
+                    <input class="inventoryField" type="text" name="ingredientQuantity" placeholder="Ingredient qunatity (grams)" required="true">
+                    <input class="inventoryField" type="text" name="ingredientPrice" placeholder="Ingredient price" required="true"><br><br>
                     <input class="inventoryButton" type="submit" value="Add to Inventory">
                 </form>
                 <table>

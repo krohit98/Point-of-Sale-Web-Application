@@ -23,15 +23,15 @@
         <div id="registerDiv">
             <form id="registerForm" action="registerAdmin" method="POST">
                 {%csrf_token%}
-                <input class="registerField" type="text" name="adminName" placeholder="Enter Admin Name">
-                <input class="registerField" type="text" name="restaurantName" placeholder="Enter Restaurant Name">
-                <input class="registerField" type="text" name="adminEmail" placeholder="Enter Admin Email">
-                <input class="registerField" type="text" name="restaurantAddress" placeholder="Enter Restaurant Address">
-                <input class="registerField" type="text" name="adminAddress" placeholder="Enter Admin Address">
-                <input class="registerField" type="password" name="password1" placeholder="Enter Password">
-                <input class="registerField" type="number" name="adminContact" placeholder="Enter Admin Contact">
-                <input class="registerField" type="password" name="password2" placeholder="Confirm Password">
-                <input class="registerField" type="text" name="adminAccessID" placeholder="Enter Admin Access ID">
+                <input class="registerField" type="text" name="adminName" placeholder="Enter Admin Name" required="true">
+                <input class="registerField" type="text" name="restaurantName" placeholder="Enter Restaurant Name" required="true">
+                <input class="registerField" type="email" name="adminEmail" placeholder="Enter Admin Email" required="true">
+                <input class="registerField" type="text" name="restaurantAddress" placeholder="Enter Restaurant Address" required="true">
+                <input class="registerField" type="text" name="adminAddress" placeholder="Enter Admin Address" required="true">
+                <input class="registerField" type="password" name="password1" placeholder="Enter Password" required="true">
+                <input class="registerField" type="number" name="adminContact" placeholder="Enter Admin Contact" required="true">
+                <input class="registerField" type="password" name="password2" placeholder="Confirm Password" required="true">
+                <input class="registerField" type="text" name="adminAccessID" placeholder="Enter Admin Access ID" required="true">
                 <input class="registerButton" type="submit" value="Register">
             </form>
             <div id="adminText">

@@ -25,10 +25,15 @@
             <h1 id="authHead">Are you authorized to be a Staff ?</h1>
             <form id="authForm" action="authStaff" method="POST">
                 {%csrf_token%}
-                <input class="authField" type="text" name="Restaurant_ID" placeholder="Enter Restaurant ID"><br>
-                <input class="authField" type="text" name="Manager_AccessID" placeholder="Enter Access ID"><br>
+                <input class="authField" type="text" name="Restaurant_ID" placeholder="Enter Restaurant ID" required="true"><br>
+                <input class="authField" type="text" name="Manager_AccessID" placeholder="Enter Access ID" required="true"><br>
                 <input id="authButton" type="submit" value="Authorize">
             </form>
+            <div class="errorMessage">
+                {%for message in messages%}
+                    {{message}}
+                {%endfor%}
+            </div>
         </div>
     </main>
 </div>

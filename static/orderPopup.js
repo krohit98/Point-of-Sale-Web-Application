@@ -23,8 +23,8 @@ order.addEventListener("click", selectCustomer);
 
 function selectCustomer(){
     form.innerHTML=`
-        <input id="customerName" class='orderField' type='text' name='customerName' placeholder='Enter customer name'>
-        <input id="customerPhone" class='orderField' type='number' name='customerPhone' placeholder='Enter customer contact'>
+        <input id="customerName" class='orderField' type='text' name='customerName' placeholder='Enter customer name' required="true">
+        <input id="customerPhone" class='orderField' type='number' name='customerPhone' placeholder='Enter customer contact' required="true">
         <input id='goToItemSelection' class='nextButton' type='button' value='>'>
     `
     popup.style.display="flex";
@@ -52,8 +52,8 @@ function selectItems(){
 	}));
 
     form.innerHTML =`
-        <input id="itemName" class='orderField' type='text' name='itemName' placeholder='Enter item name'>
-        <input id="itemQuantity" class='orderField' type='number' name='itemQuantity' placeholder='Enter item quantity'>
+        <input id="itemName" class='orderField' type='text' name='itemName' placeholder='Enter item name' required="true">
+        <input id="itemQuantity" class='orderField' type='number' name='itemQuantity' placeholder='Enter item quantity' required="true">
         <input id="itemDiscount" class='orderField' type='number' name='itemDiscount' placeholder='Enter item discount'>
         <button id='addItemButton' type='button'>Add Item to Order</button>
         <input id='goToFireKOT' class='nextButton' type='button' value='>'>
@@ -69,7 +69,7 @@ function fireKOT(){
                 <p>Customer Name: <b>${CustomerName}</b></p>
                 <p>Customer Contact: <b>${CustomerPhone}</b></p>
                 <p>Order Date: <b>${date.getDate()}/${date.getMonth()}/${date.getFullYear()}</b></p><br>
-                <input id="orderType" list="orderTypeList" class='orderField' type='text' name='orderType' placeholder='Enter type of order'>
+                <input id="orderType" list="orderTypeList" class='orderField' type='text' name='orderType' placeholder='Enter type of order' required="true">
                 <datalist id="orderTypeList">
                     <option value="Dine-in">Dine-in</option>
                     <option value="Takeaway">Takeaway</option>
@@ -94,7 +94,7 @@ function fireKOT(){
                     <label for='totalPrice'>Total Price:</label>
                     <input id="totalPrice" class="amountDivField" type='text' name='totalPrice'></input><br><br>
                     <label for='amountRecieved'>Amount Recieved:</label>
-                    <input id="amountRecieved" class="amountDivField" type='text' name='amountRecieved'></input><br><br>
+                    <input id="amountRecieved" class="amountDivField" type='text' name='amountRecieved' required="true"></input><br><br>
                     <label for='returnBalance'>returnBalance to return:</label>
                     <input id="returnBalance" class="amountDivField" type='text' name='returnBalance'></input><br><br>
                 </div>

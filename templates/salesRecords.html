@@ -47,7 +47,6 @@
                        <th>Order Price</th>
                        <th>Date</th>
                        <th>Time</th>
-                       <th>Invoice</th>
                    </tr>
                    {%for order in Completedorders%}
                    <tr class="orderRecordsData">
@@ -61,7 +60,6 @@
                        <td>{{order.price}}/-</td>
                        <td>{{order.date}}</td>
                        <td>{{order.time}}</td>
-                       <td><a href="#">Print</a></td>
                    </tr>
                    {%endfor%}
                </table>

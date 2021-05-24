@@ -25,13 +25,13 @@
             <h1>Register as Staff</h1>
             <form id="registerForm" action="registerStaff" method="POST">
                 {%csrf_token%}
-                <input class="registerField" type="text" name="staffName" placeholder="Enter Name">
-                <input class="registerField" type="text" name="staffEmail" placeholder="Enter Email">
-                <input class="registerField" type="text" name="staffAddress" placeholder="Enter Address">
-                <input class="registerField" type="password" name="password1" placeholder="Enter Password">
-                <input class="registerField" type="number" name="staffContact" placeholder="Enter Contact">
-                <input class="registerField" type="password" name="password2" placeholder="Confirm Password">
-                <input class="registerField" type="text" name="designation" placeholder="Enter staff post">
+                <input class="registerField" type="text" name="staffName" placeholder="Enter Name" required="true">
+                <input class="registerField" type="email" name="staffEmail" placeholder="Enter Email" required="true">
+                <input class="registerField" type="text" name="staffAddress" placeholder="Enter Address" required="true">
+                <input class="registerField" type="password" name="password1" placeholder="Enter Password" required="true">
+                <input class="registerField" type="number" name="staffContact" placeholder="Enter Contact" required="true">
+                <input class="registerField" type="password" name="password2" placeholder="Confirm Password" required="true">
+                <input class="registerField" type="text" name="designation" placeholder="Enter staff post" required="true">
                 <input class="registerButton" type="submit" value="Register">
             </form>
         </div>
